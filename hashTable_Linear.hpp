@@ -27,18 +27,18 @@ public:
             int idx = (start + i) % m;
             auto& s = table[idx];
 
-            if (!s) {                         // całkiem puste
+            if (!s) {                        
                 s = Entry{ key,false };
                 return true;
             }
-            if (s->deleted) {                 // „nagrobek”
+            if (s->deleted) {                 
                 *s = Entry{ key,false };
                 return true;
             }
-            if (s->key == key)                // duplikat
+            if (s->key == key)               
                 return false;
         }
-        return false;                         // pełna tablica
+        return false;                         
     }
 
     bool remove(int key)
