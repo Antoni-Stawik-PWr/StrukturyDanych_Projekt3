@@ -1,16 +1,11 @@
-﻿// TwoChoiceHashing.hpp
+
 #pragma once
 #include <vector>
 #include <optional>
 #include <functional>
 #include "HashUtils.hpp"
 
-/*─────────────────────────────────────────────────────────────
-  Two-Choice Hashing  (power of two choices)
-  - dla klucza liczymy dwa niezależne hasze: h1, h2
-  - wstawiamy do krótszego kubełka; tu każdy kubełek = pojedynczy slot,
-    więc „krótszy” = pusty. Jeśli oba zajęte → liniowe dosondowanie.
-─────────────────────────────────────────────────────────────*/
+
 class TwoChoiceHashing
 {
     struct Slot { int key = 0; bool occupied = false; };
@@ -32,7 +27,7 @@ public:
         int idx1 = wrap(h1(key, m), m);
         int idx2 = wrap(h2(key, m), m);
 
-        /* krótszy kubełek = pusty slot */
+        
         if (!table[idx1].occupied) {
             table[idx1] = { key, true };
             return true;
@@ -42,7 +37,7 @@ public:
             return true;
         }
 
-        /* oba zajęte → fallback: liniowe sondowanie */
+       
         for (int step = 1; step < m; ++step) {
             ++probesIns;
             int idx = (idx1 + step) % m;
@@ -50,9 +45,9 @@ public:
                 table[idx] = { key, true };
                 return true;
             }
-            if (table[idx].key == key) return false;   // duplikat
+            if (table[idx].key == key) return false;   
         }
-        return false;                                  // pełna tabela
+        return false;                                 
     }
 
     bool remove(int key)
@@ -66,7 +61,7 @@ public:
                 return true;
             }
         }
-        /* liniowe sondowanie w razie kolizji trzeciego poziomu */
+        
         int idxStart = idxs[0];
         for (int step = 1; step < m; ++step) {
             ++probesRem;
