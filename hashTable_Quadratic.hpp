@@ -24,15 +24,15 @@ public:
 
         for (int i = 0; i < m; ++i) {
             ++probesIns;
-            long long step = 1LL * i * i;                     // ✔︎ 64-bit
+            long long step = 1LL * i * i;                   
             int idx = static_cast<int>((start + step) % m);
             auto& s = table[idx];
 
             if (!s) { s = Entry{ key,false }; return true; }
             if (s->deleted) { *s = Entry{ key,false }; return true; }
-            if (s->key == key)     return false;                       // dup
+            if (s->key == key)     return false;                       
         }
-        return false;                                               // full
+        return false;                                               
     }
 
     bool remove(int key)
