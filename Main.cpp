@@ -10,11 +10,11 @@
 #include "hashTable_Linear.hpp"
 #include "hashTable_Quadratic.hpp"
 #include "hashTable_RobinHood.hpp"
-#include "SeparateChaining.hpp"    // HashTableSeparateChaining
-#include "TwoChoiceHashing.hpp"    // TwoChoiceHashing
+#include "SeparateChaining.hpp"   
+#include "TwoChoiceHashing.hpp"    
 #include "Hash_functions.hpp"
 
-/* --- generatory danych ----------------------------------------------*/
+
 std::vector<int> genOptimistic(int n, int) {
     std::vector<int> v; v.reserve(n);
     for (int i = 0; i < n; ++i) v.push_back(i * 1'000);
@@ -33,16 +33,16 @@ std::vector<int> genPessimistic(int n, int m) {
 
 int main()
 {
-    std::locale::global(std::locale::classic());                 // liczby z kropką
+    std::locale::global(std::locale::classic());                 
     using namespace std::chrono;
 
-    /* --- plik wynikowy ----------------------------------------------*/
+  
     std::ofstream file("testy.csv");
     file.imbue(std::locale::classic());
     file << "Przypadek;Rozmiar;Wypełnienie;Funkcja;Strategia;"
         "CzasInsert[ms];AvgInsertProbes;CzasRemove[ms];AvgRemoveProbes\n";
 
-    /* --- parametry testu --------------------------------------------*/
+    
     std::vector<int> tableSizes;
     for (int s = 10'000; s <= 100'000; s += 10'000) tableSizes.push_back(s);
 
@@ -63,10 +63,10 @@ int main()
 
     const int totalSteps =
         tableSizes.size() * fillFactors.size() *
-        hashFuncs.size() * dataCases.size() * 5;        // 5 strategii
+        hashFuncs.size() * dataCases.size() * 5;       
     int step = 0;
 
-    /* --- główne pętle ------------------------------------------------*/
+ 
     for (auto [caseName, gen] : dataCases)
     {
         for (int m : tableSizes)
@@ -100,7 +100,7 @@ int main()
                                 << std::left << std::setw(16) << strat << "\r";
                         };
 
-                    /* pięć strategii */
+                    
                     { HashTableLinear             ht(m, h);                   test(ht, "Linear"); }
                     { HashTableQuadratic          ht(m, h);                   test(ht, "Quadratic"); }
                     { HashTableRobinHood          ht(m, h);                   test(ht, "RobinHood"); }
@@ -111,6 +111,6 @@ int main()
         }
     }
 
-    std::cout << "\n✅ Testy zakończone. Wyniki zapisano do pliku testy.csv\n";
+    std::cout << "\n Testy zakończone. Wyniki zapisano do pliku testy.csv\n";
     return 0;
 }
