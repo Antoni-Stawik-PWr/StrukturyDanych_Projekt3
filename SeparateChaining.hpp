@@ -4,16 +4,14 @@
 #include <functional>
 #include "HashUtils.hpp"
 
-/*─────────────────────────────────────────────────────────────
-  Hash table – separate chaining
-─────────────────────────────────────────────────────────────*/
+
 class HashTableSeparateChaining
 {
     std::vector<std::list<int>>        table;
     std::function<int(int, int)>        hashFunc;
     int                                m;
 
-    /* statystyki: licznik porównań przy insert/remove */
+    
     long long probesIns = 0, probesRem = 0;
 
 public:
@@ -27,7 +25,7 @@ public:
         int idx = wrap(hashFunc(key, m), m);
         auto& bucket = table[idx];
 
-        for (int k : bucket) {           // wyszukiwanie duplikatu
+        for (int k : bucket) {         
             ++probesIns;
             if (k == key) return false;
         }
